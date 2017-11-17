@@ -1,0 +1,5 @@
+{% macro scripts(links) %}
+    {% for link in links %}
+        <script src="{{ link }}"></script>
+    {% endfor %}
+{% endmacro %}
