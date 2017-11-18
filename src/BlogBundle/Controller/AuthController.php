@@ -9,8 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     /**
      * @Route("/register", name="register_form")
@@ -38,20 +39,33 @@ class RegisterController extends Controller
 
         if($form->isValid()) {
             $password = $encoderInterface->encodePassword($user, $user->getPlainPassword());
+
             $user->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            return $this->redirect("login_page");
         } else {
             return $this->render(":auth:regiser.html.twig", [
                 "scripts" => $scripts->getScripts(),
                 "form" => $form->createView()
             ]);
         }
-
-        echo 'save';
-        exit();
     }
 
+    /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Scripts $scripts, AuthenticationUtils $authenticationUtils) {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render(":auth:login.html.twig", [
+            "scripts" => $scripts->getScripts(),
+            "last_username" => $lastUsername,
+            "error" => $error
+        ]);
+    }
 }

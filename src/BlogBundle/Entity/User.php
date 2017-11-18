@@ -33,6 +33,13 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="full_name", type="string", length=255)
      */
     private $fullName;
@@ -168,7 +175,7 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        return array('ROLE_USER');
     }
 
     /**
@@ -184,14 +191,22 @@ class User implements UserInterface
     }
 
     /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
+     * @return string
      */
     public function getUsername()
     {
-        return $this->email;
+        return $this->username;
     }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+
 
     /**
      * Removes sensitive data from the user.
