@@ -12,8 +12,6 @@ class HomeController extends Controller
      */
     public function indexAction(Scripts $scripts)
     {
-        return $this->render('::index.html.twig', [
-            "scripts" => $scripts->getScripts()
-        ]);
+        return $this->render('::index.html.twig');
     }
 }

@@ -1,0 +1,6 @@
+{% extends ":layout:base.html.twig" %}
+
+{% block content %}
+    {{ form(form, {'method': 'post', "action" : url("insert_post")}) }}
+
+{% endblock %}

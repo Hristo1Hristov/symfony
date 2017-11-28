@@ -12,15 +12,6 @@ namespace BlogBundle\Controller;
 class Scripts
 {
     private $scripts = [
-        "/assets/js/jquery.min.js",
-        "/assets/js/bootstrap.min.js",
-        "/assets/js/scripts.js",
-        "/assets/js/jquery.isotope.js",
-        "/assets/js/jquery.slicknav.js",
-        "/assets/js/jquery.visible.js",
-        "/assets/js/jquery.sticky.js",
-        "/assets/js/slimbox2.js",
-        "/assets/js/modernizr.custom.js",
     ];
 
     /**

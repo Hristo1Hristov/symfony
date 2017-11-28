@@ -17,12 +17,11 @@ class AuthController extends Controller
      * @Route("/register", name="register_form")
      * @Method({"GET"})
      */
-    public function getRegisterAction(Scripts $scripts) {
+    public function getRegisterAction() {
         $user = new User();
         $form = $this->createForm(UserType::class, $user)   ;
 
         return $this->render(":auth:regiser.html.twig", [
-            "scripts" => $scripts->getScripts(),
             "form" => $form->createView()
         ]);
     }
@@ -31,7 +30,7 @@ class AuthController extends Controller
      * @Route("/register", name="register_account")
      * @Method({"POST"})
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $encoderInterface, Scripts $scripts) {
+    public function registerAction(Request $request, UserPasswordEncoderInterface $encoderInterface) {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
@@ -49,7 +48,6 @@ class AuthController extends Controller
             return $this->redirect("login_page");
         } else {
             return $this->render(":auth:regiser.html.twig", [
-                "scripts" => $scripts->getScripts(),
                 "form" => $form->createView()
             ]);
         }
@@ -58,12 +56,11 @@ class AuthController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction(Scripts $scripts, AuthenticationUtils $authenticationUtils) {
+    public function loginAction(AuthenticationUtils $authenticationUtils) {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(":auth:login.html.twig", [
-            "scripts" => $scripts->getScripts(),
             "last_username" => $lastUsername,
             "error" => $error
         ]);

@@ -2,6 +2,7 @@
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,6 +45,11 @@ class User implements UserInterface
      */
     private $fullName;
 
+    /**
+     * @ORM\Column()
+     */
+    private $avatar;
+
 
     /**
      * @Assert\NotBlank()
@@ -52,8 +58,18 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     */
+    private $posts;
+    /**
      * @return mixed
      */
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
+
     public function getPlainPassword()
     {
         return $this->plainPassword;
